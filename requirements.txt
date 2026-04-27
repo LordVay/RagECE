@@ -1,0 +1,39 @@
+# ── Core App ──────────────────────────────────────────────
+python-dotenv==1.2.2
+streamlit==1.56.0
+
+# ── LangChain Ecosystem ───────────────────────────────────
+langchain==1.2.15
+langchain-classic==1.0.4
+langchain-community==0.3.31
+langchain-huggingface==1.2.2
+langchain-text-splitters==1.1.2
+langchain-google-genai==4.2.2
+langchain-unstructured==1.0.1
+langchain-pinecone==0.2.0
+
+# ── Embeddings ────────────────────────────────────────────
+sentence-transformers==5.4.1
+
+# ── Vector Store ──────────────────────────────────────────
+pinecone==6.0.2
+
+# ── PDF & OCR ─────────────────────────────────────────────
+unstructured==0.22.22
+unstructured[pdf]==0.22.22
+pdf2image==1.17.0
+pytesseract==0.3.13
+opencv-python-headless
+
+# ── spaCy (Python 3.12 compatible) ────────────────────────
+spacy==3.8.4
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+
+# ── Protobuf / gRPC ───────────────────────────────────────
+protobuf==5.29.6
+grpcio==1.80.0
+
+# ── OpenTelemetry ─────────────────────────────────────────
+opentelemetry-api==1.41.0
+opentelemetry-sdk==1.41.0
+opentelemetry-exporter-otlp-proto-grpc==1.41.0
