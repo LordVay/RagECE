@@ -19,29 +19,32 @@ st.set_page_config(
 
 st.title("RagTRONICS")
 
-if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []
+def chat_history():
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = []
 
-for message in st.session_state.chat_history:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-        
-if "upload_file" not in st.session_state:
-    uploaded_file = st.file_uploader("Upload a PDF File", type=["pdf"])
-    if uploaded_file is not None:
-        process_new_documents_to_pinecone(uploaded_files=uploaded_file)
+    for message in st.session_state.chat_history:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
 
-user_prompt = st.chat_input("Ask Electronics Stuff")
-if user_prompt:
-    with st.chat_message("user"):
-        st.markdown(user_prompt)
-    st.session_state.chat_history.append({"role":"user", "content":user_prompt})
+def upload_file():
+    if "upload_file" not in st.session_state:
+        uploaded_file = st.file_uploader("Upload a PDF File", type=["pdf"])
+        if uploaded_file is not None:
+            process_new_documents_to_pinecone(uploaded_files=uploaded_file)
 
-    history = [{"role":"system", "content":"You are a helpful Chatbot Assistant"}, *st.session_state.chat_history]
-    answer, sources = process_answer(history)
+def user_prompt():
+    user_prompt = st.chat_input("Ask Electronics Stuff")
+    if user_prompt:
+        with st.chat_message("user"):
+            st.markdown(user_prompt)
+        st.session_state.chat_history.append({"role":"user", "content":user_prompt})
 
-    st.session_state.chat_history.append({"role":"assistant", "content":answer})
+        history = [{"role":"system", "content":"You are a helpful Chatbot Assistant"}, *st.session_state.chat_history]
+        answer, sources = process_answer(history)
 
-    with st.chat_message("assistant"):
-        st.markdown(answer)
-        st.markdown(sources)
+        st.session_state.chat_history.append({"role":"assistant", "content":answer})
+
+        with st.chat_message("assistant"):
+            st.markdown(answer)
+            st.markdown(sources)
