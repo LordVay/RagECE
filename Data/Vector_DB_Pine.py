@@ -2,7 +2,7 @@ from pinecone import Pinecone, ServerlessSpec
 import streamlit as st
 
 def get_index_name():
-    index_name = "RagTRONICS"
+    index_name = "ragtronics"
     return index_name
 
 def create_index():
@@ -16,11 +16,14 @@ def create_index():
             metric="cosine",
             spec=ServerlessSpec(
                 cloud="aws",
+                region = "us-east-1"
             )
         )
 
     index = pc.Index(index_name)
 
     return index
+
+create_index()
 
 

@@ -1,4 +1,4 @@
-import os
+import os,sys
 from langchain_community.document_loaders import DirectoryLoader, UnstructuredFileLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_pinecone import PineconeVectorStore
@@ -6,14 +6,15 @@ from pinecone import Pinecone
 import streamlit as st
 from pathlib import Path
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from Data.Vector_DB_Pine import get_index_name
 from Models.Model import get_embedings
 
-BASE_DIR    = Path(__file__).resolve().parent
+BASE_DIR    = Path(__file__).resolve().parent.parent
 DOCS_DIR    = BASE_DIR / "Data" / "Docs"
 
 def get_vectorstore():
-    pc = Pinecone(api_key=os.environ["PINECONE_API_KEY"])
+    pc = Pinecone(api_key=st.secrets["PINECONE_API_KEY"])
     index_name = get_index_name()
 
     return PineconeVectorStore(
@@ -88,3 +89,6 @@ def process_new_documents_to_pinecone(uploaded_files):
     get_vectorstore.clear()
 
     st.success(f"{len(new_files)} new document(s) embedded successfully.")
+
+
+process_initial_document_to_pinecone()

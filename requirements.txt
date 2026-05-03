@@ -10,7 +10,7 @@ langchain-huggingface==1.2.2
 langchain-text-splitters==1.1.2
 langchain-google-genai==4.2.2
 langchain-unstructured==1.0.1
-langchain-pinecone==0.2.0
+langchain-pinecone==0.2.13          # was 0.2.0 — that version requires langchain-core<0.4, incompatible with everything above
 
 # ── Embeddings ────────────────────────────────────────────
 sentence-transformers==5.4.1
