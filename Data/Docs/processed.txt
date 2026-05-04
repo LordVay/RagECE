@@ -1,6 +1,8 @@
+RA9292.pdf
 ACElectricalCircuitAnalysis.pdf
 DCElectricalCircuitAnalysis.pdf
 Electromagnetics_Vol2.pdf
+Electronic Devices and Circuit Theory 7th Edition.pdf
 ESD.pdf
 Feedback Systems Murray.pdf
 Microprocessor.pdf

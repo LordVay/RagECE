@@ -14,7 +14,7 @@ BASE_DIR    = Path(__file__).resolve().parent.parent
 DOCS_DIR    = BASE_DIR / "Data" / "Docs"
 
 def get_vectorstore():
-    pc = Pinecone(api_key=st.secrets["PINECONE_API_KEY"])
+    pc = Pinecone(api_key=st.secrets["PINE_API_KEY"])
     index_name = get_index_name()
 
     return PineconeVectorStore(
@@ -37,8 +37,10 @@ def process_initial_document_to_pinecone():
 
     texts = text_splitter.split_documents(documents)
     vector_db = get_vectorstore()
-    vector_db.add_texts(texts=texts)
-
+    text_contents = [doc.page_content for doc in texts]
+    metadata = [doc.metadata for doc in texts]
+    vector_db.add_texts(texts=text_contents, metadatas=metadata)
+    
     return 0
 
 def get_processed_files():
@@ -79,9 +81,10 @@ def process_new_documents_to_pinecone(uploaded_files):
         chunk_overlap=200
     )
     texts = text_splitter.split_documents(documents)
-
-    vectordb = get_vectorstore()
-    vectordb.add_documents(texts)
+    vector_db = get_vectorstore()
+    text_contents = [doc.page_content for doc in texts]
+    metadata = [doc.metadata for doc in texts]
+    vector_db.add_texts(texts=text_contents, metadatas=metadata)
 
     for f in new_files:
         save_processed_file(f.name)

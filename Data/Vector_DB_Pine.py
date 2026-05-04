@@ -12,7 +12,7 @@ def create_index():
     if index_name not in pc.list_indexes().names():
         pc.create_index(
             name=index_name,
-            dimension=384,
+            dimension=768,
             metric="cosine",
             spec=ServerlessSpec(
                 cloud="aws",
@@ -25,5 +25,4 @@ def create_index():
     return index
 
 create_index()
-
 

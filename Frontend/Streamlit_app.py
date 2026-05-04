@@ -28,10 +28,20 @@ def chat_history():
             st.markdown(message["content"])
 
 def upload_file():
-    if "upload_file" not in st.session_state:
+    if "file_uploaded" not in st.session_state:
+        st.session_state.file_uploaded = False
+    if not st.session_state.file_uploaded:
         uploaded_file = st.file_uploader("Upload a PDF File", type=["pdf"])
         if uploaded_file is not None:
-            process_new_documents_to_pinecone(uploaded_files=uploaded_file)
+            file_key = f"processed_{uploaded_file.name}"
+            
+            if file_key not in st.session_state:
+                process_new_documents_to_pinecone(uploaded_files=uploaded_file)
+                st.session_state[file_key] = True
+                st.session_state.file_uploaded = True
+                st.success(f"'{uploaded_file.name}' processed successfully!")
+            else:
+                st.info(f"'{uploaded_file.name}' has already been processed.")
 
 def user_prompt():
     user_prompt = st.chat_input("Ask Electronics Stuff")
@@ -40,11 +50,24 @@ def user_prompt():
             st.markdown(user_prompt)
         st.session_state.chat_history.append({"role":"user", "content":user_prompt})
 
-        history = [{"role":"system", "content":"You are a helpful Chatbot Assistant"}, *st.session_state.chat_history]
-        answer, sources = process_answer(history)
+        chat_history_pairs = []
+        msgs = st.session_state.chat_history
+
+        for i in range(0, len(msgs) - 1, 2):
+            if msgs[i]["role"] == "user" and msgs[i+1]["role"] == "assistant":
+                chat_history_pairs.append(
+                    (msgs[i]["content"], msgs[i+1]["content"])
+                )
+
+        answer, sources = process_answer(user_prompt, chat_history_pairs)
 
         st.session_state.chat_history.append({"role":"assistant", "content":answer})
 
         with st.chat_message("assistant"):
             st.markdown(answer)
-            st.markdown(sources)
+            for doc in sources:
+                st.markdown(f"Sources: {doc.metadata}")
+
+chat_history()
+upload_file()
+user_prompt()
