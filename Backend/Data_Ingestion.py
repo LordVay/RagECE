@@ -92,6 +92,3 @@ def process_new_documents_to_pinecone(uploaded_files):
     get_vectorstore.clear()
 
     st.success(f"{len(new_files)} new document(s) embedded successfully.")
-
-
-process_initial_document_to_pinecone()
