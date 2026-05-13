@@ -3,14 +3,13 @@ python-dotenv==1.2.2
 streamlit==1.56.0
 
 # ── LangChain Ecosystem ───────────────────────────────────
-langchain==1.2.15
-langchain-classic==1.0.4
+langchain==1.2.18
 langchain-community==0.3.31
 langchain-huggingface==1.2.2
 langchain-text-splitters==1.1.2
 langchain-google-genai==4.2.2
 langchain-unstructured==1.0.1
-langchain-pinecone==0.2.13          # was 0.2.0 — that version requires langchain-core<0.4, incompatible with everything above
+langchain-pinecone==0.2.13
 
 # ── Embeddings ────────────────────────────────────────────
 sentence-transformers==5.4.1
